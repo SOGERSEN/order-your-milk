@@ -56,7 +56,7 @@
 | 🔬 **Research** | Triple parallel drill: core + applications + pitfalls / 三路并行：核心+应用+陷阱 |
 | ⚡ **Execute (Diverge)** | 8 levels (L1–L8), multi-path exploration, pick the best / 八档系统，多路探索择优 |
 | ✅ **Deliver** | Test → verify → confirm / 测试→验证→确认 |
-| ⚡🔬 **Dual Modes** | Fast Mode (5min) or Deep Mode (120min) / 快速模式(5分钟) 或 深度模式(120分钟) |
+| ⚡🔬 **Dual Modes** | Fast Mode or Deep Mode (with Karpathy's 4 coding principles) / 快速模式或深度模式（含Karpathy编码准则） |
 
 <br>
 
@@ -68,10 +68,10 @@
 # Hermes Agent
 hermes skill install order-your-milk
 
-# Claude Code
+# Claude Code — full parallel sub-agent capability
 cp order-your-milk/SKILL.md ./CLAUDE.md
 
-# Cursor / Windsurf
+# Cursor / Windsurf — parallel agent mode
 # Copy .cursorrules template from references/platform-adapters.md
 
 # Any Agent

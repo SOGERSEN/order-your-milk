@@ -67,7 +67,6 @@
 │ 一次一问 │     │ 三路并行  │     │ 多路探索  │     │ 测试验证  │
 │ 逐步收敛 │     │ 深度钻探  │     │ 择优融合  │     │ 确认满意  │
 └─────────┘     └──────────┘     └──────────┘     └──────────┘
-  30秒            5-15分钟          10-60分钟         5-10分钟
 ```
 
 </div>
@@ -83,14 +82,13 @@
 | | ⚡ 快速模式 | 🔬 深度模式 |
 |:--|:--|:--|
 | **目标** | 尽快拿到可用结果 | 追求最高质量交付 |
-| **耗时** | 5–15 分钟 | 30–120 分钟 |
 | **点单** | 1–2 个核心问题 | 完整 2–4 轮点单 |
-| **调研** | 跳过 | 三路并行钻探 |
+| **调研** | 快速扫描（了解怎么做才能动手） | 三路并行钻探 |
 | **执行** | L1–L2（单路） | L3–L8（多路 + 编码准则） |
 | **交付** | 语法 + 功能快检 | 5 轮全面验证 |
 | **默认** | ✅ 无明确信号时 | 用户说"仔细做"时 |
 
-> **深度模式强制 4 条高级编码准则**，来自业界最佳实践：
+> 深度模式强制 4 条高级编码准则，来自 Andrej Karpathy 的 CLAUDE.md ——经过验证能显著减少LLM编码错误：
 > 🧠 思考先行 · 📐 简洁优先 · 🔪 精确修改 · 🎯 目标驱动
 
 <br>
@@ -128,19 +126,19 @@
 
 ### 1. 🧋 奶茶店点单 — *市场上没有的功能*
 
-所有AI编程工具都假设用户知道自己要什么。**这个skill引导你。** 结构化选项引导，3个问题把"我想做个网站"变成明确需求。
+结构化选项引导，3个问题把"我想做个网站"变成明确需求。**让你从模糊想法走到可执行方案。**
 
 ### 2. 🔬 三路并行调研 — *比 Deep Research 更深*
 
-Perplexity/OpenAI 的 Deep Research 是串行的。本skill从 **3个角度同时钻探**：核心概念 + 实际应用 + 常见陷阱。配合空腔检测和自动绕行。
+从 **3个角度同时钻探**：核心概念 + 实际应用 + 常见陷阱。配合空腔检测和自动绕行。
 
 ### 3. ⚡ 三路分流执行 — *系统性多样性注入*
 
-没有框架原生支持"同一任务走多条路"。每条路径被赋予 **不同的优化目标**，确保方案真正不同。不是简单重复——是系统性探索。
+每条路径被赋予 **不同的优化目标**，确保方案真正不同。不是简单重复——是系统性探索。
 
 ### 4. 🌍 跨Agent通用 — *零锁定*
 
-纯方法论，无API依赖。Hermes（完整并行）、Claude Code（串行模拟）、Cursor/Windsurf（串行模拟）、Copilot，或任意支持系统提示的Agent 都能工作。
+纯方法论，无API依赖。Hermes、Claude Code、Cursor、Windsurf、Copilot，或任意支持系统提示的Agent 都能工作。
 
 ### 5. 🎚️ 八档控制 — *精确的成本/质量旋钮*
 
@@ -164,14 +162,14 @@ hermes skill install order-your-milk
 </details>
 
 <details>
-<summary><b>🟠 Claude Code</b> — 串行模拟 + --print 并行</summary>
+<summary><b>🟠 Claude Code</b> — Subagents + Agent View + Agent Teams + Workflows</summary>
 
 ```bash
 # 将方法论复制到项目中
 cp order-your-milk/SKILL.md ./CLAUDE.md
 ```
 
-串行模拟三路分流。可用 `--print` 模式并行执行。
+Subagents + Agent View + Agent Teams + Workflows — 真正并行。
 
 </details>
 
@@ -183,17 +181,19 @@ cp order-your-milk/SKILL.md ./CLAUDE.md
 # 或将 SKILL.md 内容复制到 .cursorrules
 ```
 
-Agent模式串行执行。配置模板已包含在项目中。
+Cursor Cloud Agents 独立VM真正并行。Windsurf 多Cascade同时运行真正并行。配置模板已包含在项目中。
 
 </details>
 
 <details>
-<summary><b>🟢 GitHub Copilot</b> — Chat + @workspace 上下文</summary>
+<summary><b>🟢 GitHub Copilot</b> — Cloud Agent 独立VM</summary>
 
 ```bash
 # 从 references/platform-adapters.md 复制配置模板
 cp order-your-milk/references/platform-adapters.md .github/copilot-instructions.md
 ```
+
+Cloud Agent 独立VM — 真正并行。
 
 </details>
 
@@ -255,11 +255,11 @@ order-your-milk/
 | 平台 | 支持度 | 能力 |
 |:-----|:------:|:-----|
 | **Hermes Agent** | ✅ 完整 | 真正并行子Agent — 八档全可用 |
-| **Claude Code** | ✅ 完整 | 串行模拟 + `--print` 并行模式 |
-| **Cursor** | ✅ 完整 | Agent模式串行 + 配置模板 |
-| **Windsurf** | ✅ 完整 | Cascade/Flow模式 + 配置模板 |
-| **OpenCode** | ✅ 完整 | `opencode run` 串行执行 |
-| **GitHub Copilot** | ✅ 完整 | Chat + `@workspace` 上下文 |
+| **Claude Code** | ✅ 完整 | Subagents + Agent View + Agent Teams + Workflows — 真正并行 |
+| **Cursor** | ✅ 完整 | Cloud Agents 独立VM — 真正并行 |
+| **Windsurf** | ✅ 完整 | 多Cascade同时运行 — 真正并行 |
+| **OpenCode** | ✅ 完整 | opencode run 并行执行 |
+| **GitHub Copilot** | ✅ 完整 | Cloud Agent 独立VM — 真正并行 |
 | **任意 Agent** | 🔶 基础 | 系统提示支持核心流程 |
 
 <br>

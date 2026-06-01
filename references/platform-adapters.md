@@ -193,12 +193,14 @@ Round 3: "From a pitfalls perspective, what are common issues with {technology}?
 
 **Step 3 Forking**:
 ```bash
-# Use --print mode to execute 3 times (different prompts)
+# Use subagents or Agent Teams for parallel execution
+# Option 1: Use Agent Teams to run 3 paths in parallel
+# Option 2: Use --print mode with background processes
 claude -p "Implement Plan A (optimize performance): ..." --print > /tmp/plan_a.md &
 claude -p "Implement Plan B (optimize maintainability): ..." --print > /tmp/plan_b.md &
 claude -p "Implement Plan C (optimize simplicity): ..." --print > /tmp/plan_c.md &
 wait
-# Compare the three plans
+# Compare the three plans via Agent View
 ```
 
 ---
@@ -261,9 +263,9 @@ Before delivery, you must:
 
 ---
 
-## Cursor / Windsurf
+## Cursor
 
-**Installation**: Write the core content of SKILL.md into `.cursorrules` or `.windsurfrules` (see templates above)
+**Installation**: Write the core content of SKILL.md into `.cursorrules` (see template above)
 
 **Step 1 Ordering**:
 ```
@@ -278,14 +280,40 @@ Enter a number to choose:"
 
 **Step 2 Research**:
 ```
-Ask deep questions in multiple rounds in chat
-Approach each round from a different angle
+Use Cloud Agents on isolated VMs for parallel research
+Each Cloud Agent investigates from a different angle
 ```
 
 **Step 3 Forking**:
 ```
-Execute 3 times in Agent mode (different prompts) and compare results
-Or execute in separate tabs and compare manually
+Use Cloud Agents on isolated VMs to run 3 paths in parallel
+Each path executes on its own isolated VM
+Compare results when all complete
+```
+
+---
+
+## Windsurf
+
+**Installation**: Write the core content of SKILL.md into `.windsurfrules` (see template above)
+
+**Step 1 Ordering**:
+```
+Ask questions step by step in AI chat, one question at a time
+Use numbered lists for options
+```
+
+**Step 2 Research**:
+```
+Launch multiple simultaneous Cascades for parallel research
+Each Cascade investigates from a different angle
+```
+
+**Step 3 Forking**:
+```
+Use multiple simultaneous Cascades to run 3 paths in parallel
+Each Cascade handles one path independently
+Compare results when all complete
 ```
 
 ---
@@ -310,11 +338,12 @@ wait
 
 **Step 3 Forking**:
 ```bash
-# Use opencode run to execute 3 times (different prompts)
+# Use parallel run capability to execute 3 paths simultaneously
 opencode run "Path-A (Performance): ..." &
 opencode run "Path-B (Maintainability): ..." &
 opencode run "Path-C (Simplicity): ..." &
 wait
+# Compare the three plans
 ```
 
 ---
@@ -394,8 +423,9 @@ Leverage @workspace to reference project context
 
 **Step 3 Forking**:
 ```
-Make multiple requests for different approaches in Copilot Chat
-Compare the output results
+Use Cloud Agent to run multiple paths in parallel
+Each path executes independently via Cloud Agent
+Compare results when all complete
 ```
 
 ---
@@ -429,16 +459,16 @@ If not supported: execute 3 times serially and compare results
 | Capability | Hermes | Claude Code | Cursor | Windsurf | OpenCode | Copilot |
 |------|--------|-------------|--------|----------|----------|---------|
 | Interactive Selection | ✅ clarify | ⚠️ Conversation | ⚠️ Conversation | ⚠️ Conversation | ⚠️ Conversation | ⚠️ Conversation |
-| Parallel Sub-Agents | ✅ delegate_task | ❌ | ❌ | ❌ | ❌ | ❌ |
-| Background Processes | ✅ terminal(bg) | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Parallel Sub-Agents | ✅ delegate_task | ✅ subagents + Agent Teams | ✅ Cloud Agents (isolated VMs) | ✅ multiple Cascades | ✅ parallel run | ✅ Cloud Agent |
+| Background Processes | ✅ terminal(bg) | ✅ workflows | ✅ Cloud Agents | ✅ Cascade background | ✅ parallel run | ✅ Cloud Agent |
 | File Operations | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | Terminal Operations | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Web Search | ✅ | ⚠️ | ⚠️ | ⚠️ | ⚠️ | ⚠️ |
+| Web Search | ✅ | ✅ | ⚠️ | ⚠️ | ⚠️ | ⚠️ |
 | Config File | skill directory | CLAUDE.md | .cursorrules | .windsurfrules | System prompt | copilot-instructions.md |
 
 **Key Conclusions**:
 - Hermes has the most complete capabilities and can implement all 8 tiers
-- Other platforms mainly simulate parallelism through "multiple executions of the same agent"
+- All major platforms now support true parallelism through their respective mechanisms
 - Ordering (Step 1) works well on all platforms
-- Research (Step 2) works on all platforms; parallelism is a bonus
-- Forking (Step 3) degrades to "execute multiple times and compare" on non-Hermes platforms
+- Research (Step 2) works on all platforms with parallel execution
+- Forking (Step 3) works in parallel across all major platforms

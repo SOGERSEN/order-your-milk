@@ -102,8 +102,10 @@ This is not simple repetition — it systematically explores different solution 
 
 This is not a code framework — it's a **thinking methodology**. It works when installed on any AI Agent:
 - Hermes Agent → Full capability (with parallelism)
-- Claude Code → Full capability (serial simulation)
-- Cursor/Windsurf → Full capability (serial simulation)
+- Claude Code → Full capability (subagents, Agent View, Agent Teams, workflows)
+- Cursor → Full capability (Cloud Agents on isolated VMs)
+- Windsurf → Full capability (multiple simultaneous Cascades)
+- GitHub Copilot → Full capability (Cloud Agent)
 - Any Agent with system prompt support → Basic capability
 
 ### 5. Eight-Level Execution System — Precise Cost/Quality Control
@@ -200,10 +202,10 @@ Explain "why we're doing this" during execution to help users learn:
 
 Order Your Milk has two execution rhythms, automatically selected based on the user's time and quality needs:
 
-| Mode | Name | Goal | Time | Quality Level |
-|------|------|------|------|---------------|
-| ⚡ **Fast Mode** | Fast Mode | Get usable results ASAP | 5–15 min | Functional + Looks acceptable |
-| 🔬 **Deep Mode** | Deep Mode | Pursue the highest quality delivery | 30–120 min | Secure + Maintainable + Production-ready |
+| Mode | Name | Goal | Quality Level |
+|------|------|------|---------------|
+| ⚡ **Fast Mode** | Fast Mode | Get usable results ASAP | Functional + Looks acceptable |
+| 🔬 **Deep Mode** | Deep Mode | Pursue the highest quality delivery | Secure + Maintainable + Production-ready |
 
 ### When to Use Which Mode?
 
@@ -231,11 +233,11 @@ Fast Mode compresses the four-step process, skipping non-essential stages, aimin
 ```
 ⚡ Fast Mode Flow Diagram
 
-  Order(30s) ─→ Research(skip) ─→ Execute(L1-L2) ─→ Deliver(quick check)
+  Order ─→ Research(quick scan) ─→ Execute(L1-L2) ─→ Deliver(quick check)
       │              │              │              │
       │              │              │              └─ Syntax check + functional verification
       │              │              └─ Single Agent directly, or build + review
-      │              └─ Skip research, use proven solutions
+      │              └─ Quick scan to understand enough to start
       └─ 1-2 core questions, or use set meals / smart defaults
 ```
 
@@ -244,7 +246,7 @@ Fast Mode compresses the four-step process, skipping non-essential stages, aimin
 | Step | Fast Mode Approach | What's Skipped |
 |------|--------------------|----------------|
 | **Order** | 1–2 core questions, rest use defaults | Follow-ups, preference learning, confirmation sheet beautification |
-| **Research** | Skip entirely, use proven solutions | Three-track parallel drilling |
+| **Research** | Quick scan (understand enough to start) | Three-track parallel drilling |
 | **Execute** | L1 Solo or L2 Partner, single Agent completes | Multi-track divergence, cross-review |
 | **Deliver** | Syntax check + core functional verification | Boundary testing, 5-round validation |
 
@@ -264,7 +266,6 @@ Agent: "Sure, dark theme + basic four operations, OK?"
 User: "Yep"
 Agent: (L1 directly generates an HTML calculator)
 Agent: "Done! Double-click to open. Want to add scientific calculator features?"
-Time: 3 minutes
 ```
 
 ### 🔬 Deep Mode Flow
@@ -298,7 +299,7 @@ Deep Mode follows the complete four-step process and applies **Advanced Coding P
 
 ### 🔬 Deep Mode: Advanced Coding Principles
 
-During the coding phase of Deep Mode, all Agents **must follow these four principles**. These principles come from industry best practices and significantly improve code quality:
+During the coding phase of Deep Mode, all Agents **must follow these four principles**. These principles are from Andrej Karpathy's [CLAUDE.md](https://github.com/anthropics/claude-code/blob/main/CLAUDE.md), a proven framework for reducing LLM coding mistakes:
 
 #### Principle 1: Think Before Coding
 
@@ -1138,17 +1139,26 @@ Step 4 (Deliver): Use terminal() to run tests
 
 ```
 Step 1 (Order): Ask step-by-step in conversation, use numbered lists for options
-Step 2 (Research): Same Agent queries 3 times (different angles)
-Step 3 (Diverge): Use --print mode to execute 3 times (different prompts), compare output
+Step 2 (Research): Use subagents for parallel research, view progress in Agent View
+Step 3 (Diverge): Use Agent Teams or workflows to run multiple paths in parallel, compare output
 Step 4 (Deliver): Use bash to run tests
 ```
 
-### Cursor / Windsurf
+### Cursor
 
 ```
 Step 1 (Order): Ask step-by-step in AI chat
-Step 2 (Research): Multi-round deep questioning in chat
-Step 3 (Diverge): Use Agent mode to execute 3 times (different prompts), compare results
+Step 2 (Research): Use Cloud Agents on isolated VMs for parallel research
+Step 3 (Diverge): Use Cloud Agents to run multiple paths in parallel on isolated VMs, compare results
+Step 4 (Deliver): Use terminal to run tests
+```
+
+### Windsurf
+
+```
+Step 1 (Order): Ask step-by-step in AI chat
+Step 2 (Research): Launch multiple simultaneous Cascades for parallel research
+Step 3 (Diverge): Use multiple simultaneous Cascades to run paths in parallel, compare results
 Step 4 (Deliver): Use terminal to run tests
 ```
 
@@ -1156,8 +1166,17 @@ Step 4 (Deliver): Use terminal to run tests
 
 ```
 Step 1 (Order): Ask step-by-step in conversation
-Step 2 (Research): Use opencode run to execute 3 times
-Step 3 (Diverge): Use opencode run to execute 3 times (different prompts)
+Step 2 (Research): Use parallel run capability to execute 3 research tracks simultaneously
+Step 3 (Diverge): Use parallel run capability to execute 3 paths simultaneously, compare results
+Step 4 (Deliver): Use terminal to run tests
+```
+
+### GitHub Copilot
+
+```
+Step 1 (Order): Ask step-by-step in Copilot Chat
+Step 2 (Research): Use Cloud Agent for parallel research
+Step 3 (Diverge): Use Cloud Agent to run multiple paths in parallel, compare results
 Step 4 (Deliver): Use terminal to run tests
 ```
 
@@ -1328,7 +1347,7 @@ After each task, check:
 | Preference memory | 3 consistent choices → auto-apply; first time → full questioning |
 | Teaching mode | Default silent; user says "explain" → switch to teaching mode |
 | Optimization objectives | Different project types use different three-track target configurations |
-| Cross-platform downgrade | Non-parallel platforms → simulate 3 tracks serially, slightly reduced effect but methodology unchanged |
+| Cross-platform downgrade | All major platforms now support true parallelism; methodology works at full capability across platforms |
 | **Mode Selection** | No clear signal → default ⚡ Fast Mode; user says "take it slow" → 🔬 Deep Mode |
 | **Coding Principles** | 🔬 Deep Mode enforces four principles; ⚡ Fast Mode uses standard quality |
 
@@ -1402,9 +1421,9 @@ Syntax check → Functional verification → Boundary testing → Actual run →
 
 | Signal | Mode | Order | Research | Execute | Deliver |
 |--------|------|-------|----------|---------|---------|
-| "quick" "demo" "prototype" | ⚡ Fast | 1–2 Qs | Skip | L1–L2 | Quick check |
+| "quick" "demo" "prototype" | ⚡ Fast | 1–2 Qs | Quick scan | L1–L2 | Quick check |
 | "important" "secure" "careful" | 🔬 Deep | Full | 3 tracks | L3–L8 | Comprehensive |
-| No clear signal | ⚡ Fast default | 1–2 Qs | Skip | L1–L2 | Quick check |
+| No clear signal | ⚡ Fast default | 1–2 Qs | Quick scan | L1–L2 | Quick check |
 
 **Deep Mode Coding Principles**: Think Before Coding / Simplicity First / Surgical Changes / Goal-Driven Execution
 

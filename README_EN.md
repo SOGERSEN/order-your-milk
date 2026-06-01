@@ -68,7 +68,6 @@ Install it on *any* AI Agent — Hermes, Claude Code, Cursor, Windsurf, Copilot,
 │ at a    │     │ parallel │     │ path     │     │ verify   │
 │ time    │     │ drilling │     │ diverge  │     │          │
 └─────────┘     └──────────┘     └──────────┘     └──────────┘
-  30 sec          5-15 min         10-60 min        5-10 min
 ```
 
 </div>
@@ -84,14 +83,13 @@ Install it on *any* AI Agent — Hermes, Claude Code, Cursor, Windsurf, Copilot,
 | | ⚡ Fast Mode | 🔬 Deep Mode |
 |:--|:--|:--|
 | **Goal** | Working result ASAP | Highest quality delivery |
-| **Time** | 5–15 min | 30–120 min |
 | **Clarify** | 1–2 quick questions | Full 2–4 round ordering |
-| **Research** | Skip entirely | Triple parallel drill |
+| **Research** | Quick scan (know enough to execute) | Triple parallel drill |
 | **Execute** | L1–L2 (single path) | L3–L8 (multi-path + coding principles) |
 | **Verify** | Syntax + basic function | 5-round full validation |
 | **Default** | ✅ When no clear signal | When user says "take your time" |
 
-> **Deep Mode enforces 4 coding principles** from industry best practices:
+> **Deep Mode enforces 4 coding principles from Andrej Karpathy's CLAUDE.md — proven to reduce LLM coding mistakes:**
 > 🧠 Think Before Coding · 📐 Simplicity First · 🔪 Surgical Changes · 🎯 Goal-Driven Execution
 
 <br>
@@ -129,19 +127,19 @@ Choose your investment based on task importance:
 
 ### 1. 🧋 Milk Tea Ordering — *No competitor does this*
 
-Every AI coding tool assumes you know what you want. **This one guides you.** Structured option-based questions turn *"I want a website"* into a clear spec in 3 questions.
+Structured option-based guidance turns vague ideas into clear specs in 3 questions. No guesswork.
 
 ### 2. 🔬 Triple Parallel Research — *Deeper than Deep Research*
 
-Perplexity/OpenAI Deep Research is serial. This skill drills from **3 angles simultaneously**: core concepts + real-world applications + common pitfalls. With cavity detection and auto-bypass.
+This skill drills from **3 angles simultaneously**: core concepts + real-world applications + common pitfalls. With cavity detection and auto-bypass.
 
 ### 3. ⚡ Triple-Path Divergence — *Systematic diversity*
 
-No framework natively supports "same task, multiple paths." Each path is given a **different optimization target**, ensuring the solutions genuinely differ. Not repetition — exploration.
+Each path is given a **different optimization target**, ensuring the solutions genuinely differ. Not repetition — exploration.
 
 ### 4. 🌍 Cross-Agent Universal — *Zero lock-in*
 
-Pure methodology, no API dependencies. Works on Hermes (full parallel), Claude Code (serial), Cursor/Windsurf (serial), Copilot, or any Agent with a system prompt.
+Pure methodology, no API dependencies. Works on Hermes, Claude Code, Cursor, Windsurf, Copilot, or any Agent with a system prompt.
 
 ### 5. 🎚️ Eight-Level Control — *Precise cost/quality dial*
 
@@ -172,7 +170,7 @@ Full parallel capability — all 8 levels available.
 cp order-your-milk/SKILL.md ./CLAUDE.md
 ```
 
-Serial simulation of triple paths. Use `--print` mode for parallel execution.
+Full subagent capability — parallel sub-agents, Agent View, Teams.
 
 </details>
 
@@ -184,7 +182,7 @@ Serial simulation of triple paths. Use `--print` mode for parallel execution.
 # Or copy SKILL.md content into .cursorrules
 ```
 
-Agent mode serial execution. Config templates included.
+Agent mode with parallel capability. Config templates included.
 
 </details>
 
@@ -254,11 +252,11 @@ order-your-milk/
 | Platform | Support | Capability |
 |:---------|:-------:|:-----------|
 | **Hermes Agent** | ✅ Full | True parallel sub-agents — all 8 levels |
-| **Claude Code** | ✅ Full | Serial simulation + `--print` parallel mode |
-| **Cursor** | ✅ Full | Agent mode serial + config templates |
-| **Windsurf** | ✅ Full | Cascade + Flow modes + config templates |
-| **OpenCode** | ✅ Full | `opencode run` serial execution |
-| **GitHub Copilot** | ✅ Full | Chat + `@workspace` context |
+| **Claude Code** | ✅ Full | Subagents + Agent View + Agent Teams + Workflows — true parallel |
+| **Cursor** | ✅ Full | Cloud Agents on isolated VMs — true parallel |
+| **Windsurf** | ✅ Full | Multiple simultaneous Cascades — true parallel |
+| **OpenCode** | ✅ Full | `opencode run` parallel execution |
+| **GitHub Copilot** | ✅ Full | Cloud Agent on isolated VMs — true parallel |
 | **Any Agent** | 🔶 Basic | System prompt support enables core flow |
 
 <br>
