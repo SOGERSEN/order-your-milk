@@ -192,7 +192,7 @@ User: "I want to build X"
 
 ### Phase A: Core Questions (1-2 questions)
 
-Ask the most important dimensions first. **One question at a time.**
+Ask the most important dimensions first. **One question at a time, using interactive UI.**
 
 | Question | Options | When to Ask |
 |:---------|:--------|:------------|
@@ -202,23 +202,17 @@ Ask the most important dimensions first. **One question at a time.**
 
 ### Phase B: Customization Menu
 
-After core questions, **always** present a customization menu. This is the key innovation — even for "simple" tasks:
+After core questions, **always** present a customization menu as **interactive checkboxes**:
 
 ```
 🎨 Here's what you can personalize for your {project type}:
 
-  ✅ Visual Style          ☐ AI decides
-     (colors, theme, fonts)
-  ✅ Layout & Structure    ☐ AI decides
-     (sections, arrangement)
-  ☐ Interaction Details    ✅ AI decides
-     (animations, transitions)
-  ☐ Data & Content         ✅ AI decides
-     (placeholder text, sample data)
+  ☑ Visual Style          ☐ AI decides
+  ☑ Layout & Structure    ☐ AI decides
+  ☐ Interaction Details   ☐ AI decides
+  ☐ Data & Content        ☐ AI decides
 
   ✅ = I want to customize  |  ☐ = AI uses best judgment
-
-  Which ones do you want to customize? (Type numbers or "none")
 ```
 
 **How to identify customizable aspects**:
@@ -236,14 +230,11 @@ After core questions, **always** present a customization menu. This is the key i
 
 ### Phase C: Detail Choices (for checked aspects only)
 
-For each checked aspect, ask with **max 4 options + AI default**:
+For each checked aspect, present as **interactive clickable options**:
 
 ```
 🎨 Ball Colors:
-  A. Rainbow (each ball a different color)
-  B. Single color (your choice)
-  C. Gradient (color changes with height)
-  D. Let AI decide ← always include this option
+  [Rainbow]  [Single color]  [Gradient]  [AI decides]
 ```
 
 **Rules**:
@@ -254,18 +245,14 @@ For each checked aspect, ask with **max 4 options + AI default**:
 
 ### Phase D: Effort Level Selection
 
-**Always** let the user choose the effort level:
+**Always** let the user choose the effort level as **interactive selection**:
 
 ```
 🎚️ How much effort should I put in?
 
-  L1 🏃 Quick    — Simple, fast, gets the job done
-  L2 🤝 Standard — Good quality with basic review
-  L3 👥 Thorough — Full design → build → test pipeline
-  L6 ⭐ Maximum  — Three approaches, pick the best
+  [L1 Quick]  [L2 Standard]  [L3 Thorough]  [L6 Maximum]
 
   Recommended for this task: L2
-  Your choice? (or press Enter for recommended)
 ```
 
 **Smart recommendation** based on task complexity:
@@ -277,13 +264,13 @@ For each checked aspect, ask with **max 4 options + AI default**:
 - If user chose L3+: re-offer customization for unchecked items
   ```
   You chose L3 (Thorough). Want to customize any additional aspects
-  before I start? (e.g., interaction details, data content)
+  before I start? [Yes, show me] [No, proceed]
   ```
 - If user declines → proceed with AI defaults for unchecked items
 
 ### Phase E: Requirements Confirmation Sheet
 
-Before executing, output a confirmation sheet showing **all choices + AI defaults**:
+Before executing, output a confirmation sheet showing **all choices + AI defaults**, with **[Confirm] [Modify]** buttons:
 
 ```
 📋 Your Order:
@@ -303,12 +290,28 @@ Before executing, output a confirmation sheet showing **all choices + AI default
 │ ⚡ Effort: L2 Standard               │
 │                                      │
 │ Output: Single HTML file             │
-│ Double-click to open                 │
 └──────────────────────────────────────┘
-Confirm to start? Or tell me what to change.
+
+[✅ Confirm & Start]  [✏️ Modify]
 ```
 
-**Wait for user to say "go"** or request changes.
+**Wait for user to confirm** or request changes.
+
+### ⚠️ Interactive UI Rules (CRITICAL)
+
+**Never ask users to type A/B/C/D.** Always use platform-native interactive elements:
+
+| Platform | How to Present Options |
+|:---------|:----------------------|
+| **Feishu (Lark)** | Interactive card buttons — use Feishu card JSON with clickable buttons |
+| **Hermes Agent** | `clarify()` tool with `choices` parameter — renders as clickable options |
+| **OpenCode** | Native interactive selection — arrow keys + Enter |
+| **Cursor / Windsurf** | Inline suggestions or numbered quick-pick |
+| **CLI / Terminal** | Use readline/inquirer-style interactive prompts with arrow key navigation |
+
+**The experience should feel like a drink shop touchscreen kiosk — tap your choice, not type it.**
+
+If the platform genuinely has NO interactive capability, then and only then fall back to numbered options — but this should be the last resort.
 
 ### Handling Detailed Specs
 
@@ -340,6 +343,7 @@ When user provides a complete detailed spec (not just "build X"):
 3. **Always offer effort level** — user controls quality investment
 4. **"AI decides" is always an option** — never force choices
 5. **Wait for confirmation** — never start without user's "go"
+6. **Use interactive UI** — clickable buttons, not text input (see Interactive UI Rules)
 
 ### Set Meals
 
@@ -579,6 +583,7 @@ User can fully customize: "three paths should optimize X, Y, Z".
 | Skip customization menu | User misses personalization | ALWAYS show customize menu |
 | Force user to choose everything | User frustrated | "AI decides" is always an option |
 | Skip effort level selection | User has no control | ALWAYS offer L1-L8 |
+| Ask user to type A/B/C/D | Bad UX, feels like a test | Use interactive clickable buttons |
 
 ### 🟢 Advanced
 
@@ -604,7 +609,7 @@ User can fully customize: "three paths should optimize X, Y, Z".
 
 **Coding Principles**: Think Before Coding · Simplicity First · Surgical Changes · Goal-Driven Execution
 
-**5 Iron Rules**: One Q at a time · Always show customize menu · Always offer L1-L8 · "AI decides" always OK · Wait for "go"
+**6 Iron Rules**: One Q at a time · Always show customize menu · Always offer L1-L8 · "AI decides" always OK · Wait for "go" · Use interactive UI
 
 ---
 
