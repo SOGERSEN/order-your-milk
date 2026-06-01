@@ -313,7 +313,31 @@ This skill can work alongside other specialized skills to form a complete develo
 
 ---
 
-## 7. Contribution Guide
+## 7. Internationalization (Creating Other Language Versions)
+
+If you want to create a translated version of this skill for users in other languages:
+
+### Steps
+1. Create a new skill (e.g., `order-your-milk` for English)
+2. Translate SKILL.md and all files in `references/` to the target language
+3. Preserve all technical terms, code blocks, emoji, and table structures
+4. Adapt cultural references (e.g., "中文文档" → "English documentation")
+5. Start the new version at 1.0.0
+6. Run the smoke test to verify completeness
+
+### Translation Fidelity Check (Mandatory)
+After translation, run 3-4 parallel sub-agents for section-by-section comparison audit:
+- Each file must have the same number of sections, table rows, and examples
+- All unique selling points must be preserved
+- Smoke test keywords must match the ACTUALLY translated text (don't use expected translations — grep the actual content)
+
+### Verified Translations
+- 🇨🇳 Chinese: `ai-dev-flow` (original version)
+- 🇬🇧 English: `order-your-milk` (full translation, 47/47 smoke test passed)
+
+---
+
+## 8. Contribution Guide
 
 If you want to share your customizations with the community:
 
