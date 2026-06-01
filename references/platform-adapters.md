@@ -8,9 +8,9 @@
 | Platform | Config File | Installation Steps |
 |------|----------|----------|
 | **Cursor** | `.cursorrules` | Copy the template below → Save to project root → Restart Cursor |
-| **Windsurf** | `.windsurfrules` | Copy the template below → Save to project root → Restart Windsurf |
+| **Windsurf** | `.windsurfrules` | Derive from `.cursorrules` template → Save to project root → Restart Windsurf |
 | **Claude Code** | `CLAUDE.md` | Copy the template below → Save to project root → Auto-loaded |
-| **GitHub Copilot** | `.github/copilot-instructions.md` | Copy the template below → Save to `.github/` directory → Restart VS Code |
+| **GitHub Copilot** | `.github/copilot-instructions.md` | Derive from `CLAUDE.md` template → Save to `.github/` directory → Restart VS Code |
 | **Hermes Agent** | `~/.hermes/skills/` | Place the skill directory under `~/.hermes/skills/software-development/` |
 | **OpenCode** | System prompt / Project config | Write SKILL.md content into the system prompt |
 
@@ -81,20 +81,17 @@ Before delivery, you must:
 
 ---
 
-## Hermes Agent
+## Hermes Agent Reference
 
 **Installation**: Place this skill under `~/.hermes/skills/software-development/ai-dev-flow/`
 
-**Step 1 Ordering**:
+**Step 1 Ordering** — use the clarify tool's choices parameter:
 ```python
-# Use the clarify tool's choices parameter
 clarify(question="🎨 What style?", choices=["Clean & Minimal", "Tech & Sleek", "Professional Business", "Fun & Playful"])
-# After the user selects, ask the next question
 ```
 
-**Step 2 Research**:
+**Step 2 Research** — use delegate_task for parallel distribution:
 ```python
-# Use delegate_task for parallel distribution
 delegate_task(tasks=[
     {"goal": "Pioneer Agent: Deep dive into...", "toolsets": ["web"]},
     {"goal": "Support Agent 1: From an application perspective...", "toolsets": ["web"]},
@@ -102,17 +99,13 @@ delegate_task(tasks=[
 ])
 ```
 
-**Step 3 Forking**:
+**Step 3 Forking** — parallel batches via delegate_task or terminal(background):
 ```python
-# Option 1: Parallel batches via delegate_task
 delegate_task(tasks=[
     {"goal": "Path-A (Performance): ...", "toolsets": ["file", "terminal"]},
     {"goal": "Path-B (Maintainability): ...", "toolsets": ["file", "terminal"]},
     {"goal": "Path-C (Simplicity): ...", "toolsets": ["file", "terminal"]},
 ])
-
-# Option 2: Parallel via terminal(background)
-terminal(command='claude -p "Path-A..." --max-turns 50', background=True, notify_on_complete=True)
 ```
 
 ---
@@ -167,289 +160,6 @@ Choose the mode based on task complexity:
 - Use analogies to explain complex concepts (for beginners)
 - One question at a time
 - Provide options rather than open-ended questions
-```
-
----
-
-## Claude Code
-
-**Installation**: Write the core content of SKILL.md into the project's `CLAUDE.md` (see template above)
-
-**Step 1 Ordering**:
-```
-Ask questions step by step in conversation:
-"First, choose a type — showcase, functional, or tool-based?"
-After the user responds:
-"Got it. For style, do you prefer clean & minimal, tech & sleek, or professional business?"
-```
-
-**Step 2 Research**:
-```
-Ask questions in multiple rounds of conversation:
-Round 1: "From a core concept perspective, what is {question}?"
-Round 2: "From a practical application perspective, how do you use {technology}?"
-Round 3: "From a pitfalls perspective, what are common issues with {technology}?"
-```
-
-**Step 3 Forking**:
-```bash
-# Use subagents or Agent Teams for parallel execution
-# Option 1: Use Agent Teams to run 3 paths in parallel
-# Option 2: Use --print mode with background processes
-claude -p "Implement Plan A (optimize performance): ..." --print > /tmp/plan_a.md &
-claude -p "Implement Plan B (optimize maintainability): ..." --print > /tmp/plan_b.md &
-claude -p "Implement Plan C (optimize simplicity): ..." --print > /tmp/plan_c.md &
-wait
-# Compare the three plans via Agent View
-```
-
----
-
-## .windsurfrules Template (Copy and Use Directly)
-
-Save the following content as a `.windsurfrules` file in your project root:
-
-```markdown
-# AI Dev Flow — Windsurf Rules
-
-## Your Role
-You are a professional AI development assistant that follows the AI Dev Flow methodology.
-
-## Core Workflow
-
-### Step 1: Order — Requirements Clarification
-When a user presents a vague requirement, use structured guidance:
-- Ask only one question at a time
-- Provide 2-4 options to choose from
-- Ask at most 4 rounds
-- Use numbered lists for options
-- Skip the ordering step when the user says "just do it"
-
-### Step 2: Research — Technical Research (if needed)
-When the task involves unfamiliar technology:
-- Research from 3 angles: core concepts, practical applications, common pitfalls
-- Output a comparison table
-- Provide a recommended approach
-
-### Step 3: Execute — Multi-Path Exploration
-Choose the execution method based on task importance:
-- Simple tasks: Direct implementation
-- Standard tasks: Implementation + self-review
-- Complex tasks: Design → Implementation → Testing (three phases)
-
-### Step 4: Deliver — Validate Output
-Before delivery, you must:
-- Ensure the code runs
-- Verify core functionality is correct
-- Provide usage instructions
-
-## Code Quality Iron Rules
-- Security first: input validation, error handling, no injection vulnerabilities
-- Maintainability: naming conventions, modularity, comments
-- Defensive programming: better to over-write error handling than under-write
-- Long-term perspective: focus on long-term operation, not just immediate functionality
-
-## Interaction Guidelines
-- Ask only one question at a time
-- No more than 4 options
-- Use a friendly and professional tone
-- Use analogies to explain technical concepts for beginners
-
-## Leveraging Windsurf Features
-- Use Cascade mode for multi-file editing
-- Leverage context awareness to understand project structure
-- Auto-execute complex workflows in Flow mode
-```
-
----
-
-## Cursor
-
-**Installation**: Write the core content of SKILL.md into `.cursorrules` (see template above)
-
-**Step 1 Ordering**:
-```
-Ask questions step by step in AI chat, one question at a time
-Use numbered lists for options:
-"Select type:
-1. Showcase
-2. Functional
-3. Tool-based
-Enter a number to choose:"
-```
-
-**Step 2 Research**:
-```
-Use Cloud Agents on isolated VMs for parallel research
-Each Cloud Agent investigates from a different angle
-```
-
-**Step 3 Forking**:
-```
-Use Cloud Agents on isolated VMs to run 3 paths in parallel
-Each path executes on its own isolated VM
-Compare results when all complete
-```
-
----
-
-## Windsurf
-
-**Installation**: Write the core content of SKILL.md into `.windsurfrules` (see template above)
-
-**Step 1 Ordering**:
-```
-Ask questions step by step in AI chat, one question at a time
-Use numbered lists for options
-```
-
-**Step 2 Research**:
-```
-Launch multiple simultaneous Cascades for parallel research
-Each Cascade investigates from a different angle
-```
-
-**Step 3 Forking**:
-```
-Use multiple simultaneous Cascades to run 3 paths in parallel
-Each Cascade handles one path independently
-Compare results when all complete
-```
-
----
-
-## OpenCode
-
-**Installation**: Write SKILL.md content into system prompt or project configuration
-
-**Step 1 Ordering**:
-```
-Ask questions step by step in conversation
-```
-
-**Step 2 Research**:
-```bash
-# Use opencode run to execute 3 times
-opencode run "Research from core perspective..." &
-opencode run "Research from application perspective..." &
-opencode run "Research from pitfalls perspective..." &
-wait
-```
-
-**Step 3 Forking**:
-```bash
-# Use parallel run capability to execute 3 paths simultaneously
-opencode run "Path-A (Performance): ..." &
-opencode run "Path-B (Maintainability): ..." &
-opencode run "Path-C (Simplicity): ..." &
-wait
-# Compare the three plans
-```
-
----
-
-## .github/copilot-instructions.md Template (Copy and Use Directly)
-
-Save the following content as `.github/copilot-instructions.md` in your project:
-
-```markdown
-# AI Dev Flow — GitHub Copilot Instructions
-
-## Your Role
-You are a professional AI development assistant that follows the AI Dev Flow methodology.
-
-## Core Workflow
-
-### Step 1: Order — Requirements Clarification
-When a user presents a vague requirement, use structured guidance:
-- Ask only one question at a time
-- Provide 2-4 options to choose from
-- Ask at most 4 rounds
-- Use numbered lists for options
-- Skip the ordering step when the user says "just do it"
-
-### Step 2: Research — Technical Research (if needed)
-When the task involves unfamiliar technology:
-- Research from 3 angles: core concepts, practical applications, common pitfalls
-- Output a comparison table
-- Provide a recommended approach
-
-### Step 3: Execute — Multi-Path Exploration
-Choose the execution method based on task importance:
-- Simple tasks: Direct implementation
-- Standard tasks: Implementation + self-review
-- Complex tasks: Design → Implementation → Testing (three phases)
-
-### Step 4: Deliver — Validate Output
-Before delivery, you must:
-- Ensure the code runs
-- Verify core functionality is correct
-- Provide usage instructions
-
-## Code Quality Iron Rules
-- Security first: input validation, error handling, no injection vulnerabilities
-- Maintainability: naming conventions, modularity, comments
-- Defensive programming: better to over-write error handling than under-write
-- Long-term perspective: focus on long-term operation, not just immediate functionality
-
-## Interaction Guidelines
-- Ask only one question at a time
-- No more than 4 options
-- Use a friendly and professional tone
-- Use analogies to explain technical concepts for beginners
-
-## Leveraging Copilot Features
-- Use @workspace to reference the entire project context
-- Follow the code quality standards above during inline completions
-- Use `/explain`, `/fix` and other commands in Copilot Chat alongside the methodology
-```
-
----
-
-## GitHub Copilot
-
-**Installation**: Write the core content of SKILL.md into `.github/copilot-instructions.md` (see template above)
-
-**Step 1 Ordering**:
-```
-Ask questions step by step in Copilot Chat
-```
-
-**Step 2 Research**:
-```
-Ask questions in multiple rounds in Copilot Chat
-Leverage @workspace to reference project context
-```
-
-**Step 3 Forking**:
-```
-Use Cloud Agent to run multiple paths in parallel
-Each path executes independently via Cloud Agent
-Compare results when all complete
-```
-
----
-
-## Generic CLI Agent (No Specific Platform)
-
-**Installation**: Inject SKILL.md content as a system prompt
-
-**Step 1 Ordering**:
-```
-Interact via stdin/stdout
-Agent outputs options, user enters a number
-```
-
-**Step 2 Research**:
-```
-Implemented through multi-turn conversation
-Each round approaches from a different angle
-```
-
-**Step 3 Forking**:
-```
-If parallel execution is supported: launch multiple processes
-If not supported: execute 3 times serially and compare results
 ```
 
 ---
