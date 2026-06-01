@@ -28,8 +28,18 @@ AI:  "What type? Showcase / Functional / Tool?"
 You: "Showcase"
 AI:  "Style? Minimal / Techy / Business?"
 You: "Minimal"
-AI:  "📋 Single-page showcase, minimal, pure frontend. Start?"
-You: "Start"
+AI:  "🎨 Here's what you can personalize:
+      ✅ Color theme    ☐ AI decides
+      ☐ Animations      ✅ AI decides
+      ☐ Layout          ✅ AI decides
+      Which to customize? (or 'none')"
+You: "Color theme"
+AI:  "Colors? A. Warm tones  B. Cool tones  C. Monochrome  D. AI decides"
+You: "Cool tones"
+AI:  "🎚️ Effort level? L1 Quick / L2 Standard / L3 Thorough (recommended: L1)"
+You: "L1"
+AI:  "📋 Your order: Showcase, minimal, cool tones, L1. Start?"
+You: "Go"
 AI:  → ✨ Done!
 ```
 
@@ -143,69 +153,210 @@ These principles are injected into every divergence prompt — each Path (A/B/C)
 
 ## Step 1: Clarify — Requirements Elicitation
 
-> Turn vague ideas into clear specs.
+> Turn vague ideas into clear specs. **Every order deserves customization — even simple ones.**
 
 ### Ordering Flow
 
 ```
-User: "I want to build a website"
+User: "I want to build X"
          │
          ▼
-   ┌──────────────────┐
-   │  Q1: What type?   │  ← Most important dimension first
-   │  Showcase / Func  │
-   └────────┬─────────┘
-            ▼
-   ┌──────────────────┐
-   │  Q2: What style?  │  ← Options adapt to Q1 answer
-   │  Minimal / Techy  │
-   └────────┬─────────┘
-            ▼
-      Requirements Spec → Next step
+   ┌──────────────────────────┐
+   │  Phase A: Core Questions  │  ← 1-2 questions to understand the task
+   │  "What type? What style?" │
+   └────────────┬─────────────┘
+                ▼
+   ┌──────────────────────────┐
+   │  Phase B: Customize Menu  │  ← "Here's what you can personalize:"
+   │  ☑ Ball colors  ☐ Chart   │     Checked = user customizes
+   │  ☐ Background   ☐ Layout  │     Unchecked = AI decides
+   └────────────┬─────────────┘
+                ▼
+   ┌──────────────────────────┐
+   │  Phase C: Detail Choices  │  ← Only for checked items (max 4 options each)
+   │  "Rainbow / Single color?"│     Always include "Skip — AI decides"
+   └────────────┬─────────────┘
+                ▼
+   ┌──────────────────────────┐
+   │  Phase D: Effort Level    │  ← L1-L8, with smart recommendation
+   │  "How much effort? L1-L8" │
+   └────────────┬─────────────┘
+                ▼
+   ┌──────────────────────────┐
+   │  Phase E: Confirmation    │  ← Summary of all choices + AI defaults
+   │  "Confirm your order?"    │
+   └──────────────────────────┘
 ```
 
-### Iron Rule
+**The metaphor**: We're running a drink shop. Every customer gets asked about their preferences — sweetness, ice, toppings. Not because they MUST choose, but because the CHOICE is part of the experience. And if they say "you decide" — great, we use our best recipe.
 
-**⚠️ One question at a time.** Never list all questions like a test form.
+### Phase A: Core Questions (1-2 questions)
+
+Ask the most important dimensions first. **One question at a time.**
+
+| Question | Options | When to Ask |
+|:---------|:--------|:------------|
+| Q1: What type? | Showcase / Functional / Tool / Custom | Always |
+| Q2: What style? | Minimal / Techy / Business / Creative | Adapt to Q1 |
+| Q3: What tech? | Pure frontend / With backend / You decide | If relevant |
+
+### Phase B: Customization Menu
+
+After core questions, **always** present a customization menu. This is the key innovation — even for "simple" tasks:
+
+```
+🎨 Here's what you can personalize for your {project type}:
+
+  ✅ Visual Style          ☐ AI decides
+     (colors, theme, fonts)
+  ✅ Layout & Structure    ☐ AI decides
+     (sections, arrangement)
+  ☐ Interaction Details    ✅ AI decides
+     (animations, transitions)
+  ☐ Data & Content         ✅ AI decides
+     (placeholder text, sample data)
+
+  ✅ = I want to customize  |  ☐ = AI uses best judgment
+
+  Which ones do you want to customize? (Type numbers or "none")
+```
+
+**How to identify customizable aspects**:
+- Think about what a user would NOTICE in the final output
+- Group related options into ASPECTS (not individual settings)
+- Typically 3-6 aspects per project
+- Each aspect should be meaningful enough to matter
+
+**Rules**:
+- Always present the menu, even if user gave detailed specs
+- Default: 1-2 aspects checked (the most impactful ones), rest AI decides
+- User can check/uncheck any aspect
+- User can say "none" → all AI decides
+- User can say "all" → customize everything
+
+### Phase C: Detail Choices (for checked aspects only)
+
+For each checked aspect, ask with **max 4 options + AI default**:
+
+```
+🎨 Ball Colors:
+  A. Rainbow (each ball a different color)
+  B. Single color (your choice)
+  C. Gradient (color changes with height)
+  D. Let AI decide ← always include this option
+```
+
+**Rules**:
+- Only ask for CHECKED aspects — skip unchecked ones entirely
+- Max 4 options per aspect + "AI decides"
+- One question at a time (never list all aspects as a test form)
+- Options should be concrete and visual (colors, not "option A/B/C")
+
+### Phase D: Effort Level Selection
+
+**Always** let the user choose the effort level:
+
+```
+🎚️ How much effort should I put in?
+
+  L1 🏃 Quick    — Simple, fast, gets the job done
+  L2 🤝 Standard — Good quality with basic review
+  L3 👥 Thorough — Full design → build → test pipeline
+  L6 ⭐ Maximum  — Three approaches, pick the best
+
+  Recommended for this task: L2
+  Your choice? (or press Enter for recommended)
+```
+
+**Smart recommendation** based on task complexity:
+- Single file, visual demo → recommend L1-L2
+- Multi-file, functional app → recommend L2-L3
+- Security/auth/payment → recommend L4-L6
+
+**After level selection**:
+- If user chose L3+: re-offer customization for unchecked items
+  ```
+  You chose L3 (Thorough). Want to customize any additional aspects
+  before I start? (e.g., interaction details, data content)
+  ```
+- If user declines → proceed with AI defaults for unchecked items
+
+### Phase E: Requirements Confirmation Sheet
+
+Before executing, output a confirmation sheet showing **all choices + AI defaults**:
+
+```
+📋 Your Order:
+┌──────────────────────────────────────┐
+│ 🧋 Type: Physics Simulation          │
+│                                      │
+│ YOUR CHOICES:                        │
+│  ✅ Ball colors: Rainbow gradient     │
+│  ✅ Background: Dark space theme      │
+│  ✅ Chart: Bell curve overlay         │
+│                                      │
+│ AI DECIDES (Chef's recipe):          │
+│  🤖 Counter design: LED-style digits  │
+│  🤖 Layout: Simulation on top,        │
+│           chart below                │
+│                                      │
+│ ⚡ Effort: L2 Standard               │
+│                                      │
+│ Output: Single HTML file             │
+│ Double-click to open                 │
+└──────────────────────────────────────┘
+Confirm to start? Or tell me what to change.
+```
+
+**Wait for user to say "go"** or request changes.
+
+### Handling Detailed Specs
+
+When user provides a complete detailed spec (not just "build X"):
+
+1. **Don't re-ask questions** — the spec already answers them
+2. **Show understanding checklist** — summarize what you understood:
+
+```
+📋 I understand your requirements:
+
+  1. Physics simulation: balls falling through nail grid
+  2. Galton Board (bean machine) physics
+  3. HTML5 Canvas, single file
+  4. Balls accumulate to form bell curve
+  5. Realistic physics with gravity and collision
+
+  Is this correct? Anything to add or change?
+```
+
+3. **Then show customization menu** — even with detailed specs, there are always aspects to personalize
+4. **Then show effort level** — let user choose L1-L8
+5. **Then confirm** — final confirmation sheet
+
+### Iron Rules
+
+1. **One question at a time** — never dump all questions as a form
+2. **Always show customization menu** — even for "simple" requests
+3. **Always offer effort level** — user controls quality investment
+4. **"AI decides" is always an option** — never force choices
+5. **Wait for confirmation** — never start without user's "go"
 
 ### Set Meals
 
-For common scenarios, offer pre-built "meals" for one-click selection:
+For common scenarios, offer pre-built "meals" that skip customization:
 
 ```
-🅰 Personal Showcase — single page, minimal, pure frontend
-🅱 Tool Widget — dark theme, single page, interactive
-🅲 Dashboard — multi-page, data visualization
-🅳 Your Custom — step by step
+🅰 Personal Showcase — minimal, single page (quick order)
+🅱 Tool Widget — dark theme, interactive (quick order)
+🅲 Dashboard — data visualization (quick order)
+🅳 Full Custom — step by step with all choices
 ```
 
 Full meal list: `references/set-meals.md` (16 meals across 3 tiers)
 
-### Requirements Confirmation Sheet
-
-Before executing, output a confirmation sheet and **wait for user to say "go"**:
-
-```
-📋 Your Order:
-┌─────────────────────────────┐
-│ Type: Functional             │
-│ Style: Dark tech             │
-│ Tech: Pure frontend          │
-│ Scope: Single page           │
-│                             │
-│ ✅ Real-time charts          │
-│ ✅ Filters                   │
-│ ☐ Login (not selected)      │
-│                             │
-│ Output: 1 HTML file          │
-│ Double-click to open         │
-└─────────────────────────────┘
-Confirm to start?
-```
-
 ### Skip Shortcut
 
-When user says "just do it" / "don't ask" / gives detailed specs → generate confirmation sheet from available info, skip questioning. If info is insufficient, ask 1-2 critical questions max.
+When user says "just do it" / "don't ask" → generate confirmation sheet with ALL AI defaults, still show it for approval. User can say "go" immediately or tweak specific items.
 
 ---
 
@@ -425,6 +576,9 @@ User can fully customize: "three paths should optimize X, Y, Z".
 | Review says "looks good" | Misses issues | Must find 3 specific problems |
 | Jargon with beginners | User intimidated | "Pure frontend" → "Double-click to open" |
 | More than 4 options | Decision paralysis | Max 4 options, split if more |
+| Skip customization menu | User misses personalization | ALWAYS show customize menu |
+| Force user to choose everything | User frustrated | "AI decides" is always an option |
+| Skip effort level selection | User has no control | ALWAYS offer L1-L8 |
 
 ### 🟢 Advanced
 
@@ -441,7 +595,7 @@ User can fully customize: "three paths should optimize X, Y, Z".
 
 | Step | Action | Key Rule |
 |:-----|:-------|:---------|
-| 🧋 Clarify | One Q at a time → Confirmation sheet | Wait for "go" |
+| 🧋 Clarify | Core Qs → Customize Menu → Detail Choices → Level → Confirm | Always offer customization |
 | 🔬 Research | Triple parallel drill (core/app/pitfalls) | Electric Screwdriver — stop when sufficient |
 | ⚡ Execute | L1–L8 multi-path, pick best | Force different optimization targets |
 | ✅ Deliver | Syntax → Function → Edge → Actually run | Never skip actual execution |
@@ -449,6 +603,8 @@ User can fully customize: "three paths should optimize X, Y, Z".
 **Dual Mode**: ⚡ Fast = quick scan + L1-L2. 🔬 Deep = full research + L3-L8 + Karpathy's 4 principles.
 
 **Coding Principles**: Think Before Coding · Simplicity First · Surgical Changes · Goal-Driven Execution
+
+**5 Iron Rules**: One Q at a time · Always show customize menu · Always offer L1-L8 · "AI decides" always OK · Wait for "go"
 
 ---
 
