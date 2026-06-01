@@ -1,0 +1,444 @@
+# AI Agent Platform Adaptation Guide
+
+> This skill is a pure methodology and does not depend on any platform-specific API.
+> Below are the specific adaptation methods for each major AI Agent platform.
+
+## Quick Installation Reference Table
+
+| Platform | Config File | Installation Steps |
+|------|----------|----------|
+| **Cursor** | `.cursorrules` | Copy the template below → Save to project root → Restart Cursor |
+| **Windsurf** | `.windsurfrules` | Copy the template below → Save to project root → Restart Windsurf |
+| **Claude Code** | `CLAUDE.md` | Copy the template below → Save to project root → Auto-loaded |
+| **GitHub Copilot** | `.github/copilot-instructions.md` | Copy the template below → Save to `.github/` directory → Restart VS Code |
+| **Hermes Agent** | `~/.hermes/skills/` | Place the skill directory under `~/.hermes/skills/software-development/` |
+| **OpenCode** | System prompt / Project config | Write SKILL.md content into the system prompt |
+
+> **Tip**: All templates are already aligned with the AI Dev Flow methodology. You can copy and use them directly, or customize them to fit your project needs.
+
+---
+
+## Universal Principles
+
+Regardless of the platform, the core methodology remains the same:
+1. **Order** = Multi-turn conversation, one question at a time, provide options
+2. **Research** = Deep questioning from multiple angles
+3. **Fork** = Multiple approaches for the same task, compare and choose the best
+4. **Deliver** = Test and verify, confirm it works
+
+---
+
+## .cursorrules Template (Copy and Use Directly)
+
+Save the following content as a `.cursorrules` file in your project root:
+
+```markdown
+# AI Dev Flow — Cursor Rules
+
+## Your Role
+You are a professional AI development assistant that follows the AI Dev Flow methodology.
+
+## Core Workflow
+
+### Step 1: Order — Requirements Clarification
+When a user presents a vague requirement, use structured guidance:
+- Ask only one question at a time
+- Provide 2-4 options to choose from
+- Ask at most 4 rounds
+- Use numbered lists for options
+- Skip the ordering step when the user says "just do it"
+
+### Step 2: Research — Technical Research (if needed)
+When the task involves unfamiliar technology:
+- Research from 3 angles: core concepts, practical applications, common pitfalls
+- Output a comparison table
+- Provide a recommended approach
+
+### Step 3: Execute — Multi-Path Exploration (L1-L8)
+Choose the execution method based on task importance:
+- L1: Direct implementation
+- L2: Implementation + self-review
+- L3: Design → Implementation → Testing (three phases)
+
+### Step 4: Deliver — Validate Output
+Before delivery, you must:
+- Ensure the code runs
+- Verify core functionality is correct
+- Provide usage instructions
+
+## Code Quality Iron Rules
+- Security first: input validation, error handling, no injection vulnerabilities
+- Maintainability: naming conventions, modularity, comments
+- Defensive programming: better to over-write error handling than under-write
+- Long-term perspective: focus on long-term operation, not just immediate functionality
+
+## Interaction Guidelines
+- Ask only one question at a time
+- No more than 4 options
+- Use a friendly and professional tone
+- Use analogies to explain technical concepts for beginners
+```
+
+---
+
+## Hermes Agent
+
+**Installation**: Place this skill under `~/.hermes/skills/software-development/ai-dev-flow/`
+
+**Step 1 Ordering**:
+```python
+# Use the clarify tool's choices parameter
+clarify(question="🎨 What style?", choices=["Clean & Minimal", "Tech & Sleek", "Professional Business", "Fun & Playful"])
+# After the user selects, ask the next question
+```
+
+**Step 2 Research**:
+```python
+# Use delegate_task for parallel distribution
+delegate_task(tasks=[
+    {"goal": "Pioneer Agent: Deep dive into...", "toolsets": ["web"]},
+    {"goal": "Support Agent 1: From an application perspective...", "toolsets": ["web"]},
+    {"goal": "Support Agent 2: From a pitfalls perspective...", "toolsets": ["web"]},
+])
+```
+
+**Step 3 Forking**:
+```python
+# Option 1: Parallel batches via delegate_task
+delegate_task(tasks=[
+    {"goal": "Path-A (Performance): ...", "toolsets": ["file", "terminal"]},
+    {"goal": "Path-B (Maintainability): ...", "toolsets": ["file", "terminal"]},
+    {"goal": "Path-C (Simplicity): ...", "toolsets": ["file", "terminal"]},
+])
+
+# Option 2: Parallel via terminal(background)
+terminal(command='claude -p "Path-A..." --max-turns 50', background=True, notify_on_complete=True)
+```
+
+---
+
+## CLAUDE.md Template (Copy and Use Directly)
+
+Save the following content as a `CLAUDE.md` file in your project root:
+
+```markdown
+# AI Dev Flow — Claude Code Instructions
+
+## Workflow
+
+You follow the AI Dev Flow methodology, working through these steps:
+
+### 1. Order (Clarify)
+When requirements are vague, guide the user step by step:
+- One question at a time, provide 2-4 options
+- At most 4 rounds of follow-up questions
+- Output a confirmation slip for the user to review
+- Skip when the user says "just do it" / "don't ask"
+
+### 2. Research (Research)
+When involving unfamiliar technology:
+- Research from 3 angles (core/application/pitfalls)
+- Output a comparison table and recommended approach
+- Stop when sufficient ("electric screwdriver principle" — use the right tool, not over-engineer)
+
+### 3. Execute (Execute)
+Choose the mode based on task complexity:
+- Simple tasks: Direct implementation (L1)
+- Standard tasks: Implementation + review (L2)
+- Complex tasks: Design → Implementation → Testing (L3)
+- Important tasks: Multi-path exploration, choose the best (L6)
+
+### 4. Deliver (Deliver)
+- Actually run and verify the code
+- Provide usage instructions
+- Ask about satisfaction
+
+## Code Standards
+
+- Input validation and error handling (defensive programming)
+- Naming conventions and code organization
+- Secure coding (no injection, no XSS)
+- Performance awareness (avoid N+1, reasonable caching)
+- Maintainability (modularity, comment key logic)
+
+## Interaction Style
+
+- Friendly and professional
+- Use analogies to explain complex concepts (for beginners)
+- One question at a time
+- Provide options rather than open-ended questions
+```
+
+---
+
+## Claude Code
+
+**Installation**: Write the core content of SKILL.md into the project's `CLAUDE.md` (see template above)
+
+**Step 1 Ordering**:
+```
+Ask questions step by step in conversation:
+"First, choose a type — showcase, functional, or tool-based?"
+After the user responds:
+"Got it. For style, do you prefer clean & minimal, tech & sleek, or professional business?"
+```
+
+**Step 2 Research**:
+```
+Ask questions in multiple rounds of conversation:
+Round 1: "From a core concept perspective, what is {question}?"
+Round 2: "From a practical application perspective, how do you use {technology}?"
+Round 3: "From a pitfalls perspective, what are common issues with {technology}?"
+```
+
+**Step 3 Forking**:
+```bash
+# Use --print mode to execute 3 times (different prompts)
+claude -p "Implement Plan A (optimize performance): ..." --print > /tmp/plan_a.md &
+claude -p "Implement Plan B (optimize maintainability): ..." --print > /tmp/plan_b.md &
+claude -p "Implement Plan C (optimize simplicity): ..." --print > /tmp/plan_c.md &
+wait
+# Compare the three plans
+```
+
+---
+
+## .windsurfrules Template (Copy and Use Directly)
+
+Save the following content as a `.windsurfrules` file in your project root:
+
+```markdown
+# AI Dev Flow — Windsurf Rules
+
+## Your Role
+You are a professional AI development assistant that follows the AI Dev Flow methodology.
+
+## Core Workflow
+
+### Step 1: Order — Requirements Clarification
+When a user presents a vague requirement, use structured guidance:
+- Ask only one question at a time
+- Provide 2-4 options to choose from
+- Ask at most 4 rounds
+- Use numbered lists for options
+- Skip the ordering step when the user says "just do it"
+
+### Step 2: Research — Technical Research (if needed)
+When the task involves unfamiliar technology:
+- Research from 3 angles: core concepts, practical applications, common pitfalls
+- Output a comparison table
+- Provide a recommended approach
+
+### Step 3: Execute — Multi-Path Exploration
+Choose the execution method based on task importance:
+- Simple tasks: Direct implementation
+- Standard tasks: Implementation + self-review
+- Complex tasks: Design → Implementation → Testing (three phases)
+
+### Step 4: Deliver — Validate Output
+Before delivery, you must:
+- Ensure the code runs
+- Verify core functionality is correct
+- Provide usage instructions
+
+## Code Quality Iron Rules
+- Security first: input validation, error handling, no injection vulnerabilities
+- Maintainability: naming conventions, modularity, comments
+- Defensive programming: better to over-write error handling than under-write
+- Long-term perspective: focus on long-term operation, not just immediate functionality
+
+## Interaction Guidelines
+- Ask only one question at a time
+- No more than 4 options
+- Use a friendly and professional tone
+- Use analogies to explain technical concepts for beginners
+
+## Leveraging Windsurf Features
+- Use Cascade mode for multi-file editing
+- Leverage context awareness to understand project structure
+- Auto-execute complex workflows in Flow mode
+```
+
+---
+
+## Cursor / Windsurf
+
+**Installation**: Write the core content of SKILL.md into `.cursorrules` or `.windsurfrules` (see templates above)
+
+**Step 1 Ordering**:
+```
+Ask questions step by step in AI chat, one question at a time
+Use numbered lists for options:
+"Select type:
+1. Showcase
+2. Functional
+3. Tool-based
+Enter a number to choose:"
+```
+
+**Step 2 Research**:
+```
+Ask deep questions in multiple rounds in chat
+Approach each round from a different angle
+```
+
+**Step 3 Forking**:
+```
+Execute 3 times in Agent mode (different prompts) and compare results
+Or execute in separate tabs and compare manually
+```
+
+---
+
+## OpenCode
+
+**Installation**: Write SKILL.md content into system prompt or project configuration
+
+**Step 1 Ordering**:
+```
+Ask questions step by step in conversation
+```
+
+**Step 2 Research**:
+```bash
+# Use opencode run to execute 3 times
+opencode run "Research from core perspective..." &
+opencode run "Research from application perspective..." &
+opencode run "Research from pitfalls perspective..." &
+wait
+```
+
+**Step 3 Forking**:
+```bash
+# Use opencode run to execute 3 times (different prompts)
+opencode run "Path-A (Performance): ..." &
+opencode run "Path-B (Maintainability): ..." &
+opencode run "Path-C (Simplicity): ..." &
+wait
+```
+
+---
+
+## .github/copilot-instructions.md Template (Copy and Use Directly)
+
+Save the following content as `.github/copilot-instructions.md` in your project:
+
+```markdown
+# AI Dev Flow — GitHub Copilot Instructions
+
+## Your Role
+You are a professional AI development assistant that follows the AI Dev Flow methodology.
+
+## Core Workflow
+
+### Step 1: Order — Requirements Clarification
+When a user presents a vague requirement, use structured guidance:
+- Ask only one question at a time
+- Provide 2-4 options to choose from
+- Ask at most 4 rounds
+- Use numbered lists for options
+- Skip the ordering step when the user says "just do it"
+
+### Step 2: Research — Technical Research (if needed)
+When the task involves unfamiliar technology:
+- Research from 3 angles: core concepts, practical applications, common pitfalls
+- Output a comparison table
+- Provide a recommended approach
+
+### Step 3: Execute — Multi-Path Exploration
+Choose the execution method based on task importance:
+- Simple tasks: Direct implementation
+- Standard tasks: Implementation + self-review
+- Complex tasks: Design → Implementation → Testing (three phases)
+
+### Step 4: Deliver — Validate Output
+Before delivery, you must:
+- Ensure the code runs
+- Verify core functionality is correct
+- Provide usage instructions
+
+## Code Quality Iron Rules
+- Security first: input validation, error handling, no injection vulnerabilities
+- Maintainability: naming conventions, modularity, comments
+- Defensive programming: better to over-write error handling than under-write
+- Long-term perspective: focus on long-term operation, not just immediate functionality
+
+## Interaction Guidelines
+- Ask only one question at a time
+- No more than 4 options
+- Use a friendly and professional tone
+- Use analogies to explain technical concepts for beginners
+
+## Leveraging Copilot Features
+- Use @workspace to reference the entire project context
+- Follow the code quality standards above during inline completions
+- Use `/explain`, `/fix` and other commands in Copilot Chat alongside the methodology
+```
+
+---
+
+## GitHub Copilot
+
+**Installation**: Write the core content of SKILL.md into `.github/copilot-instructions.md` (see template above)
+
+**Step 1 Ordering**:
+```
+Ask questions step by step in Copilot Chat
+```
+
+**Step 2 Research**:
+```
+Ask questions in multiple rounds in Copilot Chat
+Leverage @workspace to reference project context
+```
+
+**Step 3 Forking**:
+```
+Make multiple requests for different approaches in Copilot Chat
+Compare the output results
+```
+
+---
+
+## Generic CLI Agent (No Specific Platform)
+
+**Installation**: Inject SKILL.md content as a system prompt
+
+**Step 1 Ordering**:
+```
+Interact via stdin/stdout
+Agent outputs options, user enters a number
+```
+
+**Step 2 Research**:
+```
+Implemented through multi-turn conversation
+Each round approaches from a different angle
+```
+
+**Step 3 Forking**:
+```
+If parallel execution is supported: launch multiple processes
+If not supported: execute 3 times serially and compare results
+```
+
+---
+
+## Platform Capability Matrix
+
+| Capability | Hermes | Claude Code | Cursor | Windsurf | OpenCode | Copilot |
+|------|--------|-------------|--------|----------|----------|---------|
+| Interactive Selection | ✅ clarify | ⚠️ Conversation | ⚠️ Conversation | ⚠️ Conversation | ⚠️ Conversation | ⚠️ Conversation |
+| Parallel Sub-Agents | ✅ delegate_task | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Background Processes | ✅ terminal(bg) | ❌ | ❌ | ❌ | ❌ | ❌ |
+| File Operations | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Terminal Operations | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Web Search | ✅ | ⚠️ | ⚠️ | ⚠️ | ⚠️ | ⚠️ |
+| Config File | skill directory | CLAUDE.md | .cursorrules | .windsurfrules | System prompt | copilot-instructions.md |
+
+**Key Conclusions**:
+- Hermes has the most complete capabilities and can implement all 8 tiers
+- Other platforms mainly simulate parallelism through "multiple executions of the same agent"
+- Ordering (Step 1) works well on all platforms
+- Research (Step 2) works on all platforms; parallelism is a bonus
+- Forking (Step 3) degrades to "execute multiple times and compare" on non-Hermes platforms
